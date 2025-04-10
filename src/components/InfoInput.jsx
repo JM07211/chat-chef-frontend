@@ -3,6 +3,9 @@ import { FaRegTrashAlt } from "react-icons/fa";
 
 const InfoInput = ({ content }) => {
   // logic
+
+  
+
   const { label, text } = content;
 
   const onRemove = () => {

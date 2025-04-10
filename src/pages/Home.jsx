@@ -1,40 +1,43 @@
 import React from "react";
 import Button from "../components/Button";
+import Title from "../components/Title";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   // logic
 
-  const handleStart = async() => {
-    console.log("info페이지로 이동");
-    // //예외처리 구문
+  const history = useNavigate();
+  const handleStart = () => {
+    
+      history("/info");
+    
+    // console.log("info페이지로 이`동");
+    // // //예외처리 구문
+    // // try {
+    // //     const response = await fetch("http://localhost:8080/test")
+    // //     const result = await response.json
+    // //     console.log("🚀 ~ handleStart ~ response:", response) // java 읽을수있는 객체 형태로 형식 변환
+    // // } catch(error){
+    // //     //api 실패시
+    // //     console.error(error);
+    // //message api
     // try {
-    //     const response = await fetch("http://localhost:8080/test")
-    //     const result = await response.json
-    //     console.log("🚀 ~ handleStart ~ response:", response) // java 읽을수있는 객체 형태로 형식 변환
-    // } catch(error){
-    //     //api 실패시
-    //     console.error(error);
-    //message api
-    try {
-      const response = await fetch("http://localhost:8080/message", 
-        {method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({usermessage:"안녕하세요"})
-        },
-      )
-        const result = response.json();
-                console.log("🚀 ~ handleStart ~ result:", result)
+    //   const response = await fetch("http://localhost:8080/message", 
+    //     {method: "POST",
+    //       headers: {
+    //         "Content-Type": "application/json"
+    //       },
+    //       body: JSON.stringify({usermessage:"안녕하세요"})
+    //     },
+    //   )
+    //     const result = response.json();
+    //             console.log("🚀 ~ handleStart ~ result:", result)
                 
       
-    } catch(error) {
+    // } catch(error) {
 
-    }
-  }
-
-
-
+    // }
+  };
 
 
   // view
@@ -46,13 +49,8 @@ const Home = () => {
       </div>
       <div className="h-full flex flex-col">
         {/* TODO:Title 컴포넌트 */}
-        <div className="px-2 pt-6">
-          <h1 className="text-4.5xl font-black text-white">맛있는 쉐프</h1>
-          <span className="block text-sm mt-3 text-white break-keep pr-9">
-            냉장고에 있는 재료로 뭐 해먹을지 고민되시나요? 남은 재료만 넣으면
-            맛있는 레시피가 나옵니다!
-          </span>
-        </div>
+       <Title mainTitle={"맛있는 쉐프"} subTitle={"냉장고에 있는 재료로 뭐 해먹을지 고민되시나요? 남은 재료만 넣으면            맛있는 레시피가 나옵니다!"} />
+
         {/* // TODO:Title 컴포넌트 */}
         {/* START:Button 영역 */}
         <Button
