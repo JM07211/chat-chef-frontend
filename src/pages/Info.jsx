@@ -35,6 +35,7 @@ const Info = ({sendIngredientList}) => {
     if (filteredList.length) {
       //재료를 입력한 경우
       sendIngredientList(filteredList)
+      
       history("/Chat");
     
       return;
