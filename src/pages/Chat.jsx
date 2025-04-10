@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MessageBox from "../components/MessageBox";
 import PrevButton from "../components/PrevButton";
 import { MoonLoader } from "react-spinners";
 
-const Chat = () => {
+const Chat = ({ingredientList}) => {
   // logic
+  const endpoint = process.env.REACT_APP_SERVER_ADDRESS;
 
   const [value, setValue] = useState("");
 
@@ -23,6 +24,12 @@ const Chat = () => {
     console.log("메시지 보내기");
   };
 
+  useEffect(()=>{
+    console.log("ingredientList:", ingredientList)
+    console.log("endpoint",endpoint)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
+  
   // view
   return (
     <div className="w-full h-full px-6 pt-10 break-keep overflow-auto">
