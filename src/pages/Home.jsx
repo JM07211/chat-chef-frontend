@@ -4,9 +4,38 @@ import Button from "../components/Button";
 const Home = () => {
   // logic
 
-  const handleStart = () => {
+  const handleStart = async() => {
     console.log("info페이지로 이동");
-  };
+    // //예외처리 구문
+    // try {
+    //     const response = await fetch("http://localhost:8080/test")
+    //     const result = await response.json
+    //     console.log("🚀 ~ handleStart ~ response:", response) // java 읽을수있는 객체 형태로 형식 변환
+    // } catch(error){
+    //     //api 실패시
+    //     console.error(error);
+    //message api
+    try {
+      const response = await fetch("http://localhost:8080/message", 
+        {method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({usermessage:"안녕하세요"})
+        },
+      )
+        const result = response.json();
+                console.log("🚀 ~ handleStart ~ result:", result)
+                
+      
+    } catch(error) {
+
+    }
+  }
+
+
+
+
 
   // view
   return (
