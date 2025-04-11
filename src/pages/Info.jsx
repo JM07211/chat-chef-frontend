@@ -70,9 +70,9 @@ const Info = ({sendIngredientList}) => {
     // console.log("state변경!!")
   })
   //3. 특정 state가 변경될 때 실행
-useEffect(()=>{
-  console.log("🚀 ~ addIngredient:", ingredientList)
-},[ingredientList])
+  useEffect(()=>{
+    // console.log("🚀 ~ addIngredient:", ingredientList)
+  },[ingredientList])
 
 
   // view
