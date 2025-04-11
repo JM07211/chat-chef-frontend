@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import MessageBox from "../components/MessageBox";
 import PrevButton from "../components/PrevButton";
 import { MoonLoader } from "react-spinners";
+import { Result } from "postcss";
+import { IoReturnUpBack } from "react-icons/io5";
 
 const Chat = ({ingredientList}) => {
   // logic
@@ -10,23 +12,62 @@ const Chat = ({ingredientList}) => {
   const [value, setValue] = useState("");
 
   // TODO: set함수 추가하기
-  const [messages] = useState([]); // chatGPT와 사용자의 대화 메시지 배열
-  const [isInfoLoading] = useState(false); // 최초 정보 요청시 로딩
-  const [isMessageLoading] = useState(true); // 사용자와 메시지 주고 받을때 로딩
+  const [messages, setMessages] = useState([]); // chatGPT와 사용자의 대화 메시지 배열
+  const [isInfoLoading, setIsInfoLoading] = useState(true); // 최초 정보 요청시 로딩
+  const [isMessageLoading, setIsMessageLoading] = useState(false); // 사용자와 메시지 주고 받을때 로딩
+  const [infoMessages, setInfoMessages] = useState([]) // 초기 답변 대화 목록
   const hadleChange = (event) => {
     const { value } = event.target;
-    console.log("value==>", value);
+    // console.log("value==>", value);
     setValue(value);
   };
 
   const hadleSubmit = (event) => {
     event.preventDefault();
     console.log("메시지 보내기");
+
+    setMessages((prev)=>[...prev, {role: "user", content: value.trim()}]);
   };
 
+  //최종 정보 세팅
+  const sendInfo = async() =>{
+    // 로딩 스피너 On
+    setIsInfoLoading(true)
+    try {
+      const response = await fetch(`${endpoint}/recipe`,{
+        method: "POST",
+        headers: {"Content-Type" : "application/json"},
+        body: JSON.stringify({ingredientList})
+      })
+
+      const result = await response.json()
+      if(!result.data) return;
+      //arr.length -1 : 배열의 마지막 요소의 index값
+      const removeLastDataList = result.data.filter((_, index, arr) => arr.length-1  !== index )
+      console.log("🚀 ~ sendInfo ~ removeLastDataList:", removeLastDataList);
+
+      setInfoMessages (removeLastDataList); //초기 데이터 변경
+
+      const {role, content} = result.data[result.data.length - 1]
+      setMessages((prev)=>[...prev, {role, content }])
+      console.log("🚀 ~ sendInfo ~ result:", result)
+      
+
+    } catch (error) {
+      console.error(error)
+    } finally {
+      // 로딩 스피너 Off  
+      setIsInfoLoading(false)
+
+    }
+  }
+
+
+  //페이지 로드시 딱 한번 실행
   useEffect(()=>{
     console.log("ingredientList:", ingredientList)
     console.log("endpoint",endpoint)
+    sendInfo();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
   
